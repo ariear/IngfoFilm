@@ -7,7 +7,7 @@ const SplashScreen = ({navigation}) => {
 
     useEffect(() => {
         setTimeout(() => {
-            navigation.dispatch(StackActions.replace('Home'))
+            navigation.dispatch(StackActions.replace('HomeScreen'))
         }, 1000);
     }, []);
 
