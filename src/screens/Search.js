@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native"
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import CardList from "./components/CardList"
 import InputSearch from "./components/InputSearch"
+import NotFind from "./components/NotFind"
 
 const Search = () => {
     return (
@@ -18,7 +19,10 @@ const Search = () => {
             </View>
             
             <InputSearch />
-            <CardList />
+
+            {/* <CardList /> */}
+
+            <NotFind />
         </View>
     )
 }
