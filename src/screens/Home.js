@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native"
 import CategoryList from "./components/CategoryList"
 import HomeCardScroll from "./components/HomeCardScroll"
 import InputSearch from "./components/InputSearch"
@@ -7,6 +7,8 @@ import ResultCategory from "./components/ResultCategory"
 const Home = () => {
     return (
         <ScrollView style={style.container}>
+            <StatusBar backgroundColor="#242A32" />
+
             <Text style={style.textMain}>What do you want to watch?</Text>
             <InputSearch />
             <HomeCardScroll />
