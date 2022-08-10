@@ -4,14 +4,14 @@ import HomeCardScroll from "./components/HomeCardScroll"
 import InputSearch from "./components/InputSearch"
 import ResultCategory from "./components/ResultCategory"
 
-const Home = () => {
+const Home = ({navigation}) => {
     return (
         <ScrollView style={style.container}>
             <StatusBar backgroundColor="#242A32" />
 
             <Text style={style.textMain}>What do you want to watch?</Text>
             <InputSearch />
-            <HomeCardScroll />
+            <HomeCardScroll navigation={navigation} />
             <CategoryList />
             <ResultCategory />
         </ScrollView>

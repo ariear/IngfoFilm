@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import Octicons from 'react-native-vector-icons/Octicons'
+import DetailFilm from "./src/screens/DetailFilm"
 import Home from "./src/screens/Home"
 import Search from "./src/screens/Search"
 import SplashScreen from "./src/screens/SplashScreen"
@@ -16,6 +17,7 @@ const App = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }} >
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="DetailFilm" component={DetailFilm} />
       </Stack.Navigator>
     </NavigationContainer>
   )

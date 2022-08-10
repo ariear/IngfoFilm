@@ -1,9 +1,11 @@
-import { ScrollView , Image, StyleSheet } from 'react-native'
+import { ScrollView , Image, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 
-const HomeCardScroll = () => {
+const HomeCardScroll = ({navigation}) => {
     return (
     <ScrollView horizontal={true} style={style.scrollHori} >
-        <Image source={require('../../assets/card1.png')} style={style.cardSlide} />
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('DetailFilm') }>
+            <Image source={require('../../assets/card1.png')} style={style.cardSlide} />
+        </TouchableWithoutFeedback>
         <Image source={require('../../assets/card2.png')} style={style.cardSlide} />
         <Image source={require('../../assets/card3.png')} style={style.cardSlide} />
         <Image source={require('../../assets/card4.png')} style={style.cardSlide} />
