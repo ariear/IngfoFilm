@@ -1,7 +1,9 @@
 import { useState } from "react"
-import { View , Text, StyleSheet, ImageBackground, Image, TouchableWithoutFeedback } from "react-native"
+import { View , Text, StyleSheet, ImageBackground, Image, TouchableWithoutFeedback, ScrollView } from "react-native"
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import CardReview from "./components/CardReview"
+import Cast from "./components/Cast"
 
 const DetailFilm = () => {
     const [content, setContent] = useState({
@@ -22,6 +24,8 @@ const DetailFilm = () => {
                  }}>Detail</Text>
                 <Ionicon name="bookmark-outline" size={25} color="#ffff" />
             </View>
+
+            <ScrollView>
 
             <ImageBackground source={require('../assets/backdoor.png')} resizeMode="cover" style={style.backdrop}>
                  <View style={style.inBackdrop}>
@@ -65,7 +69,7 @@ const DetailFilm = () => {
                          {
                             borderBottomWidth: content.reviews ? 2 : 0 , 
                             borderColor: '#3A3F47' 
-                        }]}>About Movie</Text>
+                        }]}>Reviews</Text>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => {
                         setContent({
@@ -87,7 +91,23 @@ const DetailFilm = () => {
                         content.aboutMovie &&
                     <Text style={{ color: '#ffffff' }}>From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.</Text>
                     }
+                    {
+                        content.reviews && <CardReview />
+                    }
+                    {
+                        content.cast && (
+                            <View style={style.containerCast}>
+                                <Cast />
+                                <Cast />
+                                <Cast />
+                                <Cast />
+                                <Cast />
+                            </View>
+                            ) 
+                    }
                 </View>
+
+                </ScrollView>
         </View>
     )
 }
@@ -158,6 +178,11 @@ const style = StyleSheet.create({
     },
     contentDetail:{
         paddingHorizontal: 15
+    },
+    containerCast:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-evenly'
     }
 })
 
