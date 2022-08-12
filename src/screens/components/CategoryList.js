@@ -1,13 +1,37 @@
+import { useState } from "react"
 import { ScrollView , StyleSheet, Text } from "react-native"
 
 const CategoryList = () => {
+    const [listCategory] = useState([
+        {
+            id: 1,
+            category: 'Top rated',
+            slug: 'top_rated'
+        },
+        {
+            id: 2,
+            category: 'Now playing',
+            slug: 'now_playing'
+        },
+        {
+            id: 3,
+            category: 'Popular',
+            slug: 'popular'
+        },
+        {
+            id: 4,
+            category: 'Upcoming',
+            slug: 'upcoming'
+        },
+    ])
+
     return (
     <ScrollView horizontal={true} style={{ marginBottom: 25 }} >
-        <Text style={style.textCategory} >Now playing</Text>
-        <Text style={style.textCategory}>Upcoming</Text>
-        <Text style={style.textCategory}>Top rated</Text>
-        <Text style={style.textCategory}>Popular</Text>
-        <Text style={style.textCategory}>Now playing</Text>
+        {
+            listCategory.map(listCategory => 
+                <Text key={listCategory.id} style={style.textCategory} >{listCategory.category}</Text>
+            )
+        }
     </ScrollView>
     )
 }

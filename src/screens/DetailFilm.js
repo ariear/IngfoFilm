@@ -1,16 +1,70 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { View , Text, StyleSheet, ImageBackground, Image, TouchableWithoutFeedback, ScrollView } from "react-native"
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import axios from 'axios'
 import CardReview from "./components/CardReview"
 import Cast from "./components/Cast"
+import config from "../../config"
 
-const DetailFilm = () => {
+const DetailFilm = ({route}) => {
+    const {mid} = route.params
+
     const [content, setContent] = useState({
         aboutMovie: true,
         reviews: false,
         cast: false
     })
+    const [detailMovie , setDetailMovie] = useState({
+        poster_path: '',
+        backdrop_path: '',
+        title: '',
+        overview: '',
+        genre: '',
+        rating: '',
+        status: '',
+        years: ''
+    })
+    const [loading , setLoading] = useState(false)
+
+    const [reviews, setReviews] = useState([])
+    const [casts, setCasts] = useState([])
+
+    const getDetailMovie = async () => {
+        setLoading(true)
+        const fetchData = await axios.get(`https://api.themoviedb.org/3/movie/${mid}?api_key=${config.API_KEY}&language=en-US`)
+        if (fetchData.status === 200) {
+            setDetailMovie({
+                poster_path: fetchData.data.poster_path,
+                backdrop_path: fetchData.data.backdrop_path,
+                title: fetchData.data.title,
+                overview: fetchData.data.overview,
+                genre: fetchData.data.genres[0].name,
+                rating: fetchData.data.vote_average.toFixed(1),
+                status: fetchData.data.status,
+                years: fetchData.data.release_date.split('-')[0]
+            })
+            setLoading(false)
+        }
+    }
+
+    const getReviews = async () => {
+        const fetchData = await axios.get(`https://api.themoviedb.org/3/movie/${mid}/reviews?api_key=${config.API_KEY}`)
+        if (fetchData.status === 200) {
+            setReviews(fetchData.data.results)
+        }
+    }
+
+    const getCasts = async () => {
+        const fetchData = await axios.get(`https://api.themoviedb.org/3/movie/${mid}/casts?api_key=${config.API_KEY}`)
+        if (fetchData.status === 200) {
+            setCasts(fetchData.data.cast)
+        }
+    }
+
+    useEffect(() => {
+        getDetailMovie()
+    }, []);
 
     return (
         <View style={style.container}>
@@ -27,21 +81,21 @@ const DetailFilm = () => {
 
             <ScrollView>
 
-            <ImageBackground source={require('../assets/backdoor.png')} resizeMode="cover" style={style.backdrop}>
+            <ImageBackground source={{ uri: `https://image.tmdb.org/t/p/original/${detailMovie.backdrop_path}` }} resizeMode="cover" style={style.backdrop}>
                  <View style={style.inBackdrop}>
-                    <Image source={require('../assets/sampul.png')} style={style.sampul} />
-                    <Text style={style.rating}><Ionicon name="star-outline" size={16} color="#FF8700" />  9.5</Text>
+                    <Image source={{ uri: `https://image.tmdb.org/t/p/original/${detailMovie.poster_path}` }} style={style.sampul} />
+                    <Text style={style.rating}><Ionicon name="star-outline" size={16} color="#FF8700" />  {detailMovie.rating}</Text>
                  </View>
             </ImageBackground>
 
-                <Text style={style.title}>Spiderman No Way Home</Text>
+                <Text style={style.title}>{detailMovie.title}</Text>
 
                 <View style={style.detail}>
-                    <Text style={style.textDetail}><MaterialCommunityIcons name="calendar-blank-outline" color="#92929D" size={16} />  2021</Text>
+                    <Text style={style.textDetail}><MaterialCommunityIcons name="calendar-blank-outline" color="#92929D" size={16} />  {detailMovie.years}</Text>
                     <View style={style.lineDetail}></View>
-                    <Text style={style.textDetail}><MaterialCommunityIcons name="clock-time-three-outline" color="#92929D" size={16} />  148 minutes</Text>
+                    <Text style={style.textDetail}><MaterialCommunityIcons name="clock-time-three-outline" color="#92929D" size={16} />  {detailMovie.status}</Text>
                     <View style={style.lineDetail}></View>
-                    <Text style={style.textDetail}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#92929D" size={16} />  Action</Text>
+                    <Text style={style.textDetail}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#92929D" size={16} />  {detailMovie.genre}</Text>
                 </View>
 
                 <View style={style.listDetail}>
@@ -64,6 +118,7 @@ const DetailFilm = () => {
                             reviews: true,
                             cast: false
                         })
+                        getReviews()
                     }} >
                     <Text style={[style.listDetailText,
                          {
@@ -77,6 +132,7 @@ const DetailFilm = () => {
                             reviews: false,
                             cast: true
                         })
+                        getCasts()
                     }} >
                     <Text style={[style.listDetailText,
                          {
@@ -89,19 +145,23 @@ const DetailFilm = () => {
                 <View style={style.contentDetail}>
                     {
                         content.aboutMovie &&
-                    <Text style={{ color: '#ffffff' }}>From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.</Text>
+                    <Text style={{ color: '#ffffff' }}>{detailMovie.overview}</Text>
                     }
                     {
-                        content.reviews && <CardReview />
+                        content.reviews &&
+                        
+                        reviews.map((review , index) =>
+                            <CardReview key={index} review={review} />
+                        )
                     }
                     {
                         content.cast && (
                             <View style={style.containerCast}>
-                                <Cast />
-                                <Cast />
-                                <Cast />
-                                <Cast />
-                                <Cast />
+                            {
+                            casts.map(cast => 
+                                <Cast cast={cast} key={cast.id} />
+                                )
+                            }
                             </View>
                             ) 
                     }
@@ -134,14 +194,16 @@ const style = StyleSheet.create({
         alignItems: 'flex-end'
     },
     sampul:{
+        width: 120,
+        height: 180,
         borderRadius: 10,
-        transform: [{translateY: 60}]
+        transform: [{translateY: 90}]
     },
     title:{
         fontSize: 18,
         color: '#ffffff',
         fontWeight: '500',
-        marginLeft: 125,
+        marginLeft: 145,
         paddingTop: 10
     },
     rating:{
@@ -153,7 +215,7 @@ const style = StyleSheet.create({
         borderRadius: 10
     },
     detail:{
-        paddingTop: 50,
+        paddingTop: 80,
         flexDirection: 'row',
         justifyContent: 'center'
     },

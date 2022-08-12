@@ -1,10 +1,10 @@
 import { Image, StyleSheet, Text, View } from "react-native"
 
-const Cast = () => {
+const Cast = ({cast}) => {
     return (
         <View style={style.wrapCast}>
-            <Image source={require('../../assets/cast.png')} />
-            <Text style={style.name}>Zendaya</Text>
+            <Image source={{ uri: `https://image.tmdb.org/t/p/original/${cast.profile_path}` }} style={style.pp} />
+            <Text style={style.name}>{cast.name}</Text>
         </View>
     )
 }
@@ -15,6 +15,11 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 30
+    },
+    pp:{
+        width: 100,
+        height: 100,
+        borderRadius: 50
     },
     name: {
         color: '#ffff',

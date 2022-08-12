@@ -1,14 +1,41 @@
-import { ScrollView , Image, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView , Image, StyleSheet, TouchableWithoutFeedback, Text } from 'react-native'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import config from '../../../config'
 
 const HomeCardScroll = ({navigation}) => {
+    const [topMovie , setTopMovie] = useState([])
+    const [loadingTopMovie , setLoadingTopMovie] = useState(false)
+
+    const getTopMovie = async () => {
+        setLoadingTopMovie(true)
+        let wrap = []
+        const fetchData = await axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${config.API_KEY}`)
+        for (let i = 0; i < 6; i++) {
+            const element = fetchData.data.results[i]
+            wrap.push(element) 
+        }
+        setTopMovie(wrap)
+        setLoadingTopMovie(false)
+    }
+
+    useEffect(() => {
+        getTopMovie()
+    }, []);
+    
+
     return (
     <ScrollView horizontal={true} style={style.scrollHori} >
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('DetailFilm') }>
-            <Image source={require('../../assets/card1.png')} style={style.cardSlide} />
-        </TouchableWithoutFeedback>
-        <Image source={require('../../assets/card2.png')} style={style.cardSlide} />
-        <Image source={require('../../assets/card3.png')} style={style.cardSlide} />
-        <Image source={require('../../assets/card4.png')} style={style.cardSlide} />
+        {
+            loadingTopMovie ?
+            <Text>Loading..</Text>
+            :
+            topMovie.map((movie, index) => 
+                <TouchableWithoutFeedback onPress={() => navigation.navigate('DetailFilm', {mid: movie.id}) } key={index} >
+                    <Image source={{ uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}` }} style={style.cardSlide} />
+                </TouchableWithoutFeedback>    
+            )
+        }
     </ScrollView>
     )
 }
