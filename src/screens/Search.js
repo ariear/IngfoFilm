@@ -4,11 +4,11 @@ import CardList from "./components/CardList"
 import InputSearch from "./components/InputSearch"
 import NotFind from "./components/NotFind"
 
-const Search = () => {
+const Search = ({navigation}) => {
     return (
         <View style={style.container}>
             <View style={style.topBar}>
-                <Ionicon name="chevron-back-outline" size={25} color="#ffff" />
+                <Ionicon name="chevron-back-outline" size={25} color="#ffff" onPress={() => navigation.goBack()} />
                 <Text style={{ 
                     color: '#ffffff',
                     fontWeight: '500',

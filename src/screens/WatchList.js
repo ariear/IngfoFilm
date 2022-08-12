@@ -3,11 +3,11 @@ import Ionicon from 'react-native-vector-icons/Ionicons'
 import CardList from "./components/CardList"
 import NoMovie from "./components/NoMovie"
 
-const WatchList = () => {
+const WatchList = ({navigation}) => {
     return (
         <View style={style.container}>
             <View style={style.topBar}>
-                <Ionicon name="chevron-back-outline" size={25} color="#ffff" />
+                <Ionicon name="chevron-back-outline" size={25} color="#ffff" onPress={() => navigation.goBack() } />
                 <Text style={{ 
                     color: '#ffffff',
                     fontWeight: '500',

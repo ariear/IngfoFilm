@@ -7,7 +7,7 @@ import CardReview from "./components/CardReview"
 import Cast from "./components/Cast"
 import config from "../../config"
 
-const DetailFilm = ({route}) => {
+const DetailFilm = ({route, navigation}) => {
     const {mid} = route.params
 
     const [content, setContent] = useState({
@@ -69,7 +69,7 @@ const DetailFilm = ({route}) => {
     return (
         <View style={style.container}>
             <View style={style.topBar}>
-                <Ionicon name="chevron-back-outline" size={25} color="#ffff" />
+                <Ionicon name="chevron-back-outline" size={25} color="#ffff" onPress={() => navigation.goBack() } />
                 <Text style={{ 
                     color: '#ffffff',
                     fontWeight: '500',
