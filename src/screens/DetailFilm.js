@@ -149,7 +149,7 @@ const DetailFilm = ({route, navigation}) => {
                     }
                     {
                         content.reviews &&
-                        
+                        reviews &&
                         reviews.map((review , index) =>
                             <CardReview key={index} review={review} />
                         )

@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Image, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native"
 import CategoryList from "./components/CategoryList"
 import HomeCardScroll from "./components/HomeCardScroll"
@@ -5,6 +6,8 @@ import InputSearch from "./components/InputSearch"
 import ResultCategory from "./components/ResultCategory"
 
 const Home = ({navigation}) => {
+    const [listFilm, setListFilm] = useState([])
+
     return (
         <ScrollView style={style.container}>
             <StatusBar backgroundColor="#242A32" />
@@ -12,8 +15,8 @@ const Home = ({navigation}) => {
             <Text style={style.textMain}>What do you want to watch?</Text>
             <InputSearch />
             <HomeCardScroll navigation={navigation} />
-            <CategoryList />
-            <ResultCategory />
+            <CategoryList setListFilm={setListFilm} />
+            <ResultCategory listFilm={listFilm} navigation={navigation} />
         </ScrollView>
     )
 }

@@ -1,7 +1,7 @@
 import { View , Image , Text, StyleSheet } from "react-native"
 
 const CardReview = ({review}) => {
-    const avatar_path = review.author_details.avatar_path.slice(1)
+    let avatar_path = review.author_details.avatar_path ? review.author_details.avatar_path.slice(1) : 'https://i.ibb.co/rkR23t7/Vector.png'
 
     return (
         <View style={style.wrapCard}>
