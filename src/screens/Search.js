@@ -1,10 +1,28 @@
-import { Linking, StyleSheet, Text, View } from "react-native"
+import axios from "axios"
+import { useState } from "react"
+import { Linking, ScrollView, StyleSheet, Text, View } from "react-native"
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import CardList from "./components/CardList"
 import InputSearch from "./components/InputSearch"
 import NotFind from "./components/NotFind"
+import config from "../../config"
 
 const Search = ({navigation}) => {
+    const [searchResults , setSearchResults] = useState([])
+    const [query , setQuery] = useState('')
+    const [isNotFind , setIsNotFind] = useState(false)
+
+    const searchFilm = async () => {
+        if (query == '') return false
+
+        setSearchResults([])
+        const fetchData = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${config.API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
+        if (fetchData.status === 200) {
+            fetchData.data.results.length === 0 ? setIsNotFind(true) : setIsNotFind(false)
+            if (fetchData.data.results) return setSearchResults(fetchData.data.results)
+        }
+    }
+
     return (
         <View style={style.container}>
             <View style={style.topBar}>
@@ -18,11 +36,23 @@ const Search = ({navigation}) => {
                 <Ionicon name="alert-circle-outline" size={25} color="#ffff" onPress={() => Linking.openURL('https://github.com/ariear/IngfoFilm/issues')} />
             </View>
             
-            <InputSearch />
+            <InputSearch iseditable={true} searchFilm={searchFilm} query={query} setQuery={setQuery} />
 
-            {/* <CardList /> */}
-
-            <NotFind />
+            { isNotFind && 
+                <ScrollView>
+                    <NotFind /> 
+                </ScrollView>
+            }
+            
+            <ScrollView showsVerticalScrollIndicator={false} >
+            {
+                searchResults &&
+                searchResults.map(result => 
+                    <CardList key={result.id} result={result} navigation={navigation} />
+                )
+            }
+            </ScrollView>
+            
         </View>
     )
 }

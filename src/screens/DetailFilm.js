@@ -145,7 +145,7 @@ const DetailFilm = ({route, navigation}) => {
                 <View style={style.contentDetail}>
                     {
                         content.aboutMovie &&
-                    <Text style={{ color: '#ffffff' }}>{detailMovie.overview}</Text>
+                    <Text style={{ color: '#ffffff', marginBottom: 20 }}>{detailMovie.overview}</Text>
                     }
                     {
                         content.reviews &&

@@ -14,7 +14,8 @@ const style = StyleSheet.create({
     viewNotMovie:{
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: 30
     },
     textNotMovie:{
         color: '#fff',
@@ -27,8 +28,7 @@ const style = StyleSheet.create({
     },
     desNotMovie:{
         color: '#92929D',
-        textAlign: 'center',
-        paddingBottom: 100
+        textAlign: 'center'
     }
 })
 

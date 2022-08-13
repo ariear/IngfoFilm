@@ -1,19 +1,35 @@
-import { View , Image , Text , StyleSheet } from 'react-native'
+import { useEffect, useState } from 'react'
+import { View , Image , Text , StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import axios from 'axios'
+import config from '../../../config'
 
-const CardList = () => {
+const CardList = ({result, navigation}) => {
+    const [genre , setGenre] = useState('')
+
+    useEffect(() => {
+        axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${config.API_KEY}&language=en-US`).then(res => {
+            res.data.genres.map((genre) => {
+                if (genre.id == result.genre_ids[0]) {
+                    setGenre(genre.name)
+                }
+            })
+        })
+    }, []);
+
     return (
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('DetailFilm', {mid: result.id})} >
     <View style={style.cardResult}>
-        <Image source={require('../../assets/card1.png')} style={{ marginRight: 15 }} />
+        <Image source={{ uri: `https://image.tmdb.org/t/p/original/${result.poster_path}` }} style={style.sampul} />
         <View>
-            <Text style={style.titleCard}>Cidade Perdida</Text>
-            <Text style={{ color: '#FF8700' }}><Ionicon name="star-outline" color="#FF8700" size={16} />  9.5</Text>
-            <Text style={style.whiteText}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#ffffff" size={16} />  Action</Text>
-            <Text style={style.whiteText}><MaterialCommunityIcons name="calendar-blank-outline" color="#ffffff" size={16} />  2020</Text>
-            <Text style={style.whiteText}><MaterialCommunityIcons name="clock-time-three-outline" color="#ffffff" size={16} />  139 minutes</Text>
+            <Text style={style.titleCard}>{result.title.substring(0,21).concat('...')}</Text>
+            <Text style={{ color: '#FF8700' }}><Ionicon name="star-outline" color="#FF8700" size={16} />  {result.vote_average}</Text>
+            <Text style={style.whiteText}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#ffffff" size={16} />  {genre}</Text>
+            <Text style={style.whiteText}><MaterialCommunityIcons name="calendar-blank-outline" color="#ffffff" size={16} />  {result.release_date.split('-')[0] || '??'}</Text>
         </View>
     </View>
+    </TouchableWithoutFeedback>
     )
 }
 
@@ -21,6 +37,12 @@ const style = StyleSheet.create({
     cardResult:{
         flexDirection: 'row',
         marginBottom: 25
+    },
+    sampul:{
+        width: 100,
+        height: 150,
+        marginRight: 15,
+        borderRadius: 15
     },
     titleCard:{
         color: '#ffffff',
