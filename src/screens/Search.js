@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native"
+import { Linking, StyleSheet, Text, View } from "react-native"
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import CardList from "./components/CardList"
 import InputSearch from "./components/InputSearch"
@@ -15,7 +15,7 @@ const Search = ({navigation}) => {
                     letterSpacing: 1,
                     fontSize: 17
                  }}>Search</Text>
-                <Ionicon name="alert-circle-outline" size={25} color="#ffff" />
+                <Ionicon name="alert-circle-outline" size={25} color="#ffff" onPress={() => Linking.openURL('https://github.com/ariear/IngfoFilm/issues')} />
             </View>
             
             <InputSearch />

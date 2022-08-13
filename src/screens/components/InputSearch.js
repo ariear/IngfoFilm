@@ -1,19 +1,29 @@
-import { TextInput , StyleSheet } from "react-native"
+import { TextInput , StyleSheet, View } from "react-native"
+import Feather from 'react-native-vector-icons/Feather'
 
-const InputSearch = () => {
+const InputSearch = ({iseditable = true }) => {
     return(
-        <TextInput placeholder="Search" style={style.inputSearch} />
+        <View style={style.wrapSearch}>
+            <TextInput placeholder="Search" placeholderTextColor="#67686D" style={style.inputSearch} editable={iseditable} autoFocus={true} />
+            <Feather name="search" size={22} color="#67686D" />
+        </View>
     )
 }
 
 const style = StyleSheet.create({
-    inputSearch: {
+    wrapSearch:{
         backgroundColor: '#3A3F47',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
+        marginBottom: 25,
+        paddingHorizontal: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         borderRadius: 20,
+    },
+    inputSearch: {
+        paddingVertical: 10,
         color: '#ffffff',
-        marginBottom: 25
+        width: '85%'
     }
 })
 

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Image, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native"
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
 import CategoryList from "./components/CategoryList"
 import HomeCardScroll from "./components/HomeCardScroll"
 import InputSearch from "./components/InputSearch"
@@ -13,7 +13,13 @@ const Home = ({navigation}) => {
             <StatusBar backgroundColor="#242A32" />
 
             <Text style={style.textMain}>What do you want to watch?</Text>
-            <InputSearch />
+            
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')} >
+                <View>
+                <InputSearch iseditable={false} />
+                </View>
+            </TouchableWithoutFeedback>
+            
             <HomeCardScroll navigation={navigation} />
             <CategoryList setListFilm={setListFilm} />
             <ResultCategory listFilm={listFilm} navigation={navigation} />
