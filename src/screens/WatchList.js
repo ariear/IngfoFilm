@@ -1,9 +1,31 @@
+import { useEffect, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import CardList from "./components/CardList"
 import NoMovie from "./components/NoMovie"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CardListLocal from "./components/CardListLocal"
 
 const WatchList = ({navigation}) => {
+    const [wishlistLocal , setWishlistLocal] = useState([])
+    const [isNoMovie , setIsNoMovie] = useState(false)
+
+    const getToLocal = async () => {
+        setIsNoMovie(true)
+        const films = await AsyncStorage.getItem('films')
+        if (films !== null) {
+            setWishlistLocal(JSON.parse(films))
+            setIsNoMovie(false)
+        }
+    }
+
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+            getToLocal()  
+        });
+        getToLocal()
+    }, [navigation]);
+
     return (
         <View style={style.container}>
             <View style={style.topBar}>
@@ -17,12 +39,15 @@ const WatchList = ({navigation}) => {
                 <Text></Text>
             </View>
 
-            {/* <ScrollView showsVerticalScrollIndicator={false} >
-                <CardList />
-                <CardList />
-            </ScrollView> */}
-
-            <NoMovie />
+            <ScrollView showsVerticalScrollIndicator={false} >
+                {
+                    isNoMovie ? <NoMovie /> 
+                    :
+                    wishlistLocal.map(film => 
+                        <CardListLocal key={film.id} result={film} navigation={navigation} />
+                    )
+                }
+            </ScrollView>
         </View>
     )
 }

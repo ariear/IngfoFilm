@@ -6,9 +6,13 @@ import axios from 'axios'
 import CardReview from "./components/CardReview"
 import Cast from "./components/Cast"
 import config from "../../config"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DetailFilm = ({route, navigation}) => {
     const {mid} = route.params
+
+    const [iconWishlist, setIconWishlist] = useState('bookmark-outline')
+    const [wishlistLocal, setWishlistLocal] = useState([])
 
     const [content, setContent] = useState({
         aboutMovie: true,
@@ -16,6 +20,7 @@ const DetailFilm = ({route, navigation}) => {
         cast: false
     })
     const [detailMovie , setDetailMovie] = useState({
+        id: '',
         poster_path: '',
         backdrop_path: '',
         title: '',
@@ -35,6 +40,7 @@ const DetailFilm = ({route, navigation}) => {
         const fetchData = await axios.get(`https://api.themoviedb.org/3/movie/${mid}?api_key=${config.API_KEY}&language=en-US`)
         if (fetchData.status === 200) {
             setDetailMovie({
+                id: fetchData.data.id,
                 poster_path: fetchData.data.poster_path,
                 backdrop_path: fetchData.data.backdrop_path,
                 title: fetchData.data.title,
@@ -62,9 +68,39 @@ const DetailFilm = ({route, navigation}) => {
         }
     }
 
+    const saveFilm = async () => {
+        // setIconWishlist(iconWishlist == 'bookmark-outline' ? 'bookmark' : 'bookmark-outline')
+
+        let newData = [...wishlistLocal, detailMovie]
+        if (iconWishlist === 'bookmark') {
+            newData = wishlistLocal.filter(film => film.id !== mid)
+            await AsyncStorage.setItem('films', JSON.stringify(newData))
+            setWishlistLocal(newData)
+            setIconWishlist('bookmark-outline')
+        }
+        if (iconWishlist !== 'bookmark') {
+            await AsyncStorage.setItem('films', JSON.stringify(newData))
+            setWishlistLocal(newData)
+            setIconWishlist('bookmark')
+        }
+    }
+
+    const getData = () => {
+        AsyncStorage.getItem('films').then(data => {
+          if (data !== null) {
+            setWishlistLocal(JSON.parse(data))
+          }
+        })
+    }
+
     useEffect(() => {
         getDetailMovie()
-    }, []);
+
+        getData()
+        wishlistLocal.forEach(film => {
+            film.id == mid ? setIconWishlist('bookmark') : ''
+        });
+    }, [wishlistLocal]);
 
     return (
         <View style={style.container}>
@@ -76,7 +112,7 @@ const DetailFilm = ({route, navigation}) => {
                     letterSpacing: 1,
                     fontSize: 17
                  }}>Detail</Text>
-                <Ionicon name="bookmark-outline" size={25} color="#ffff" />
+                <Ionicon name={iconWishlist} size={25} color="#ffff"  onPress={() => saveFilm()} />
             </View>
 
             <ScrollView>
