@@ -26,7 +26,7 @@ const CardList = ({result, navigation}) => {
             <Text style={style.titleCard}>{result.title.substring(0,21).concat('...')}</Text>
             <Text style={{ color: '#FF8700' }}><Ionicon name="star-outline" color="#FF8700" size={16} />  {result.vote_average}</Text>
             <Text style={style.whiteText}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#ffffff" size={16} />  {genre}</Text>
-            <Text style={style.whiteText}><MaterialCommunityIcons name="calendar-blank-outline" color="#ffffff" size={16} />  {result.release_date.split('-')[0] || '??'}</Text>
+            <Text style={style.whiteText}><MaterialCommunityIcons name="calendar-blank-outline" color="#ffffff" size={16} />  { result.release_date && result.release_date.split('-')[0] || '??'}</Text>
         </View>
     </View>
     </TouchableWithoutFeedback>

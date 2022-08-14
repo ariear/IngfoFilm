@@ -69,7 +69,6 @@ const DetailFilm = ({route, navigation}) => {
     }
 
     const saveFilm = async () => {
-        // setIconWishlist(iconWishlist == 'bookmark-outline' ? 'bookmark' : 'bookmark-outline')
 
         let newData = [...wishlistLocal, detailMovie]
         if (iconWishlist === 'bookmark') {
