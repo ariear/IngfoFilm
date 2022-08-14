@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { View , Text, StyleSheet, ImageBackground, Image, TouchableWithoutFeedback, ScrollView } from "react-native"
+import { View , Text, StyleSheet, ImageBackground, Image, TouchableWithoutFeedback, ScrollView , ToastAndroid} from "react-native"
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
@@ -76,11 +76,13 @@ const DetailFilm = ({route, navigation}) => {
             await AsyncStorage.setItem('films', JSON.stringify(newData))
             setWishlistLocal(newData)
             setIconWishlist('bookmark-outline')
+            ToastAndroid.show('Unsaved film to wishlist', ToastAndroid.SHORT)
         }
         if (iconWishlist !== 'bookmark') {
             await AsyncStorage.setItem('films', JSON.stringify(newData))
             setWishlistLocal(newData)
             setIconWishlist('bookmark')
+            ToastAndroid.show('Saved film to wishlist', ToastAndroid.SHORT)
         }
     }
 
