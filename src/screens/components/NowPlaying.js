@@ -35,10 +35,10 @@ const NowPlaying = () => {
 
 const style = StyleSheet.create({
     textTitle:{
-        fontSize: 18,
+        fontSize: 16,
         color: '#ffff',
-        fontWeight: '500',
-        marginBottom: 20
+        marginBottom: 20,
+        fontFamily: 'Poppins-Medium'
     },
     parentCard:{
         flexDirection: 'row',

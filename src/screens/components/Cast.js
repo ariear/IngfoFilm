@@ -12,7 +12,6 @@ const Cast = ({cast}) => {
 const style = StyleSheet.create({
     wrapCast:{
         width: '40%',
-        justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 30
     },
@@ -23,7 +22,7 @@ const style = StyleSheet.create({
     },
     name: {
         color: '#ffff',
-        fontWeight: '500',
+        fontFamily: 'Poppins-Medium',
         textAlign: 'center',
         marginTop: 10
     }

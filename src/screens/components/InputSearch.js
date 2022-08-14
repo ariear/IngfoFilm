@@ -30,7 +30,8 @@ const style = StyleSheet.create({
     inputSearch: {
         paddingVertical: 10,
         color: '#ffffff',
-        width: '85%'
+        width: '85%',
+        fontFamily: 'Poppins-Regular'
     }
 })
 

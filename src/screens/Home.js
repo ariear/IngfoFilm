@@ -36,8 +36,9 @@ const style = StyleSheet.create({
     textMain:{
         color: 'white',
         fontSize: 20,
-        fontWeight: '600',
-        paddingVertical: 20
+        paddingVertical: 20,
+        fontFamily: 'Poppins-SemiBold',
+        letterSpacing: 0.4
     }
 })
 

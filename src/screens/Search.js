@@ -43,7 +43,8 @@ const Search = ({navigation}) => {
                     color: '#ffffff',
                     fontWeight: '500',
                     letterSpacing: 1,
-                    fontSize: 17
+                    fontSize: 17,
+                    fontFamily: 'Poppins-SemiBold'
                  }}>Search</Text>
                 <Ionicon name="alert-circle-outline" size={25} color="#ffff" onPress={() => Linking.openURL('https://github.com/ariear/IngfoFilm/issues')} />
             </View>

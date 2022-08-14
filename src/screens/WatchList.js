@@ -34,7 +34,8 @@ const WatchList = ({navigation}) => {
                     color: '#ffffff',
                     fontWeight: '500',
                     letterSpacing: 1,
-                    fontSize: 17
+                    fontSize: 17,
+                    fontFamily: 'Poppins-SemiBold'
                  }}>Watch list</Text>
                 <Text></Text>
             </View>

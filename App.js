@@ -44,7 +44,9 @@ const HomeScreen = () => {
           )
         },
         tabBarLabelStyle:{
-          marginBottom: 5
+          marginBottom: 5,
+          fontFamily: 'Roboto-Medium',
+          fontSize: 11
         },
         tabBarInactiveTintColor: '#67686D',
         tabBarActiveTintColor: '#0296E5'
@@ -56,7 +58,9 @@ const HomeScreen = () => {
             )
           },  
         tabBarLabelStyle:{
-          marginBottom: 5
+          marginBottom: 5,
+          fontFamily: 'Roboto-Medium',
+          fontSize: 11
         },
         tabBarInactiveTintColor: '#67686D',
         tabBarActiveTintColor: '#0296E5'
@@ -69,7 +73,9 @@ const HomeScreen = () => {
           },
           
         tabBarLabelStyle:{
-          marginBottom: 5
+          marginBottom: 5,
+          fontFamily: 'Roboto-Medium',
+          fontSize: 11
         },
         tabBarInactiveTintColor: '#67686D',
         tabBarActiveTintColor: '#0296E5'

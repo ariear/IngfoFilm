@@ -18,17 +18,19 @@ const style = StyleSheet.create({
         paddingTop: 30
     },
     textNotMovie:{
+        fontFamily: 'Poppins-SemiBold',
         color: '#fff',
-        fontSize: 18,
-        fontWeight: '500',
+        fontSize: 16,
         marginTop: 15,
-        marginBottom: 10,
+        marginBottom: 2,
         paddingHorizontal: 40,
         textAlign: 'center'
     },
     desNotMovie:{
         color: '#92929D',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Poppins-Medium',
+        fontSize: 12
     }
 })
 

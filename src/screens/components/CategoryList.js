@@ -62,7 +62,8 @@ const style = StyleSheet.create({
     textCategory:{
         color: '#ffffff',
         marginRight: 15,
-        paddingBottom: 7
+        paddingBottom: 7,
+        fontFamily: 'Poppins-Medium'
     }
 })
 

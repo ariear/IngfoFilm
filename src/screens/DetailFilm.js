@@ -107,9 +107,9 @@ const DetailFilm = ({route, navigation}) => {
                 <Ionicon name="chevron-back-outline" size={25} color="#ffff" onPress={() => navigation.goBack() } />
                 <Text style={{ 
                     color: '#ffffff',
-                    fontWeight: '500',
                     letterSpacing: 1,
-                    fontSize: 17
+                    fontSize: 17,
+                    fontFamily: 'Poppins-SemiBold'
                  }}>Detail</Text>
                 <Ionicon name={iconWishlist} size={25} color="#ffff"  onPress={() => saveFilm()} />
             </View>
@@ -119,7 +119,7 @@ const DetailFilm = ({route, navigation}) => {
             <ImageBackground source={{ uri: `https://image.tmdb.org/t/p/original/${detailMovie.backdrop_path}` }} resizeMode="cover" style={style.backdrop}>
                  <View style={style.inBackdrop}>
                     <Image source={{ uri: `https://image.tmdb.org/t/p/original/${detailMovie.poster_path}` }} style={style.sampul} />
-                    <Text style={style.rating}><Ionicon name="star-outline" size={16} color="#FF8700" />  {detailMovie.rating}</Text>
+                    <Text style={style.rating}><Ionicon name="star-outline" size={12} color="#FF8700" />  {detailMovie.rating}</Text>
                  </View>
             </ImageBackground>
 
@@ -180,7 +180,10 @@ const DetailFilm = ({route, navigation}) => {
                 <View style={style.contentDetail}>
                     {
                         content.aboutMovie &&
-                    <Text style={{ color: '#ffffff', marginBottom: 20 }}>{detailMovie.overview}</Text>
+                    <Text style={{ 
+                        color: '#ffffff', 
+                        marginBottom: 20,
+                        fontFamily: 'Poppins-Regular' }}>{detailMovie.overview}</Text>
                     }
                     {
                         content.reviews &&
@@ -237,9 +240,9 @@ const style = StyleSheet.create({
     title:{
         fontSize: 18,
         color: '#ffffff',
-        fontWeight: '500',
         marginLeft: 145,
-        paddingTop: 10
+        paddingTop: 10,
+        fontFamily: 'Poppins-SemiBold'
     },
     rating:{
         color: '#FF8700',
@@ -247,7 +250,9 @@ const style = StyleSheet.create({
         marginBottom: 10,
         paddingHorizontal: 7,
         paddingVertical: 4,
-        borderRadius: 10
+        borderRadius: 10,
+        fontSize: 12,
+        fontFamily: 'Poppins-SemiBold'
     },
     detail:{
         paddingTop: 80,
@@ -255,7 +260,9 @@ const style = StyleSheet.create({
         justifyContent: 'center'
     },
     textDetail:{
-        color: '#92929D'
+        color: '#92929D',
+        fontFamily: 'Poppins-Medium',
+        fontSize: 12
     },
     lineDetail:{
         borderWidth: 1,
@@ -271,7 +278,8 @@ const style = StyleSheet.create({
     listDetailText:{
         color: '#ffff',
         marginRight: 20,
-        paddingBottom: 10
+        paddingBottom: 3,
+        fontFamily: 'Poppins-Medium'
     },
     contentDetail:{
         paddingHorizontal: 15

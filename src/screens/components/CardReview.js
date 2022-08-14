@@ -39,13 +39,13 @@ const style = StyleSheet.create({
     },
     name:{
         color: '#ffff',
-        fontWeight: '500',
-        letterSpacing: 0.7,
-        marginBottom: 8
+        marginBottom: 8,
+        fontFamily: 'Poppins-Medium'
     },
     desComment:{
         color: '#ffff',
-        lineHeight: 19
+        lineHeight: 20,
+        fontFamily: 'Poppins-Regular'
     }
 })
 

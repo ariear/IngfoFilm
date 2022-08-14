@@ -17,17 +17,20 @@ const style = StyleSheet.create({
         alignItems: 'center'
     },
     textNotMovie:{
+        fontFamily: 'Poppins-SemiBold',
         color: '#fff',
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '500',
-        marginBottom: 10,
+        marginBottom: 2,
         paddingTop: 15
     },
     desNotMovie:{
         width: 200,
         color: '#92929D',
         textAlign: 'center',
-        paddingBottom: 80
+        paddingBottom: 80,
+        fontFamily: 'Poppins-Medium',
+        fontSize: 12
     }
 })
 

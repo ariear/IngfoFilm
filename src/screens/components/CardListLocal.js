@@ -8,8 +8,8 @@ const CardListLocal = ({result, navigation}) => {
     <View style={style.cardResult}>
         <Image source={{ uri: `https://image.tmdb.org/t/p/original/${result.poster_path}` }} style={style.sampul} />
         <View>
-            <Text style={style.titleCard}>{result.title.substring(0,21).concat('...')}</Text>
-            <Text style={{ color: '#FF8700' }}><Ionicon name="star-outline" color="#FF8700" size={16} />  {result.rating}</Text>
+            <Text style={style.titleCard}>{result.title.length <= 19 ? result.title : result.title.substring(0,19).concat('...')}</Text>
+            <Text style={{ color: '#FF8700', fontSize: 12, fontFamily: 'Poppins-SemiBold' }}><Ionicon name="star-outline" color="#FF8700" size={16} />  {result.rating}</Text>
             <Text style={style.whiteText}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#ffffff" size={16} />  {result.genre}</Text>
             <Text style={style.whiteText}><MaterialCommunityIcons name="calendar-blank-outline" color="#ffffff" size={16} />  {result.years || '??'}</Text>
         </View>
@@ -31,12 +31,15 @@ const style = StyleSheet.create({
     },
     titleCard:{
         color: '#ffffff',
-        fontSize: 18,
+        fontFamily: 'Poppins-Regular',
+        fontSize: 16,
         marginBottom: 20
     },
     whiteText:{
         color: '#ffffff',
-        marginTop: 5
+        marginTop: 2,
+        fontFamily: 'Poppins-Regular',
+        fontSize: 12
     }
 })
 
