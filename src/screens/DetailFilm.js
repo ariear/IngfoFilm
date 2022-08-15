@@ -7,6 +7,9 @@ import CardReview from "./components/CardReview"
 import Cast from "./components/Cast"
 import config from "../../config"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TitleSkeleton from "./components/TitleSkeleton"
+import DescSkeleton from "./components/DescSkeleton"
+import ReviewSkeleton from "./components/ReviewSkeleton"
 
 const DetailFilm = ({route, navigation}) => {
     const {mid} = route.params
@@ -31,6 +34,7 @@ const DetailFilm = ({route, navigation}) => {
         years: ''
     })
     const [loading , setLoading] = useState(false)
+    const [loadingReview,setLoadingReview] = useState(false)
 
     const [reviews, setReviews] = useState([])
     const [casts, setCasts] = useState([])
@@ -55,9 +59,11 @@ const DetailFilm = ({route, navigation}) => {
     }
 
     const getReviews = async () => {
+        setLoadingReview(true)
         const fetchData = await axios.get(`https://api.themoviedb.org/3/movie/${mid}/reviews?api_key=${config.API_KEY}`)
         if (fetchData.status === 200) {
             setReviews(fetchData.data.results)
+            setLoadingReview(false)
         }
     }
 
@@ -121,18 +127,18 @@ const DetailFilm = ({route, navigation}) => {
             <ImageBackground source={{ uri: `https://image.tmdb.org/t/p/original/${detailMovie.backdrop_path}` }} resizeMode="cover" style={style.backdrop}>
                  <View style={style.inBackdrop}>
                     <Image source={{ uri: `https://image.tmdb.org/t/p/original/${detailMovie.poster_path}` }} style={style.sampul} />
-                    <Text style={style.rating}><Ionicon name="star-outline" size={12} color="#FF8700" />  {detailMovie.rating}</Text>
+                    <Text style={style.rating}><Ionicon name="star-outline" size={12} color="#FF8700" />  {detailMovie.rating || '--' }</Text>
                  </View>
             </ImageBackground>
 
-                <Text style={style.title}>{detailMovie.title}</Text>
+                <Text style={style.title}>{detailMovie.title || <TitleSkeleton /> }</Text>
 
                 <View style={style.detail}>
-                    <Text style={style.textDetail}><MaterialCommunityIcons name="calendar-blank-outline" color="#92929D" size={16} />  {detailMovie.years}</Text>
+                    <Text style={style.textDetail}><MaterialCommunityIcons name="calendar-blank-outline" color="#92929D" size={16} />  {detailMovie.years || '----'}</Text>
                     <View style={style.lineDetail}></View>
-                    <Text style={style.textDetail}><MaterialCommunityIcons name="clock-time-three-outline" color="#92929D" size={16} />  {detailMovie.status}</Text>
+                    <Text style={style.textDetail}><MaterialCommunityIcons name="clock-time-three-outline" color="#92929D" size={16} />  {detailMovie.status || '----' }</Text>
                     <View style={style.lineDetail}></View>
-                    <Text style={style.textDetail}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#92929D" size={16} />  {detailMovie.genre}</Text>
+                    <Text style={style.textDetail}><MaterialCommunityIcons name="ticket-confirmation-outline" color="#92929D" size={16} />  {detailMovie.genre || '----' }</Text>
                 </View>
 
                 <View style={style.listDetail}>
@@ -185,7 +191,7 @@ const DetailFilm = ({route, navigation}) => {
                     <Text style={{ 
                         color: '#ffffff', 
                         marginBottom: 20,
-                        fontFamily: 'Poppins-Regular' }}>{detailMovie.overview}</Text>
+                        fontFamily: 'Poppins-Regular' }}>{detailMovie.overview || <DescSkeleton /> }</Text>
                     }
                     {
                         content.reviews &&
@@ -193,6 +199,14 @@ const DetailFilm = ({route, navigation}) => {
                         reviews.map((review , index) =>
                             <CardReview key={index} review={review} />
                         )
+                    }
+                    {
+                        content.reviews && 
+                        loadingReview && 
+                            <>
+                            <ReviewSkeleton />
+                            <ReviewSkeleton />
+                            </>
                     }
                     {
                         content.cast && (
@@ -257,7 +271,7 @@ const style = StyleSheet.create({
         fontFamily: 'Poppins-SemiBold'
     },
     detail:{
-        paddingTop: 80,
+        paddingTop: 70,
         flexDirection: 'row',
         justifyContent: 'center'
     },

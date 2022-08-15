@@ -1,7 +1,8 @@
-import { ScrollView , Image, StyleSheet, TouchableWithoutFeedback, Text } from 'react-native'
+import { ScrollView , Image, StyleSheet, TouchableWithoutFeedback, Text , View} from 'react-native'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import config from '../../../config'
+import HomeCardScrollSkeleton from './HomeCardScrollSkeleton'
 
 const HomeCardScroll = ({navigation}) => {
     const [topMovie , setTopMovie] = useState([])
@@ -28,7 +29,11 @@ const HomeCardScroll = ({navigation}) => {
     <ScrollView horizontal={true} style={style.scrollHori} >
         {
             loadingTopMovie ?
-            <Text>Loading..</Text>
+            <View style={{ flexDirection: 'row' }} >
+                <HomeCardScrollSkeleton />
+                <HomeCardScrollSkeleton />
+                <HomeCardScrollSkeleton />
+            </View>
             :
             topMovie.map((movie, index) => 
                 <TouchableWithoutFeedback onPress={() => navigation.navigate('DetailFilm', {mid: movie.id}) } key={index} >

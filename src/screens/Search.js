@@ -7,20 +7,24 @@ import InputSearch from "./components/InputSearch"
 import NotFind from "./components/NotFind"
 import config from "../../config"
 import NowPlaying from "./components/NowPlaying"
+import CardListSkeleton from "./components/CardListSkeleton"
 
 const Search = ({navigation}) => {
     const [searchResults , setSearchResults] = useState([])
     const [query , setQuery] = useState('')
     const [isNotFind , setIsNotFind] = useState(false)
     const [isSearch , setIsSearch] = useState(false)
+    const [isLoading , setIsloading] = useState(false)
 
     const searchFilm = async () => {
         if (query == '') return false
 
+        setIsloading(true)
         setIsSearch(true)
         setSearchResults([])
         const fetchData = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${config.API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
         if (fetchData.status === 200) {
+            setIsloading(false)
             fetchData.data.results.length === 0 ? setIsNotFind(true) : setIsNotFind(false)
             if (fetchData.data.results) return setSearchResults(fetchData.data.results)
         }
@@ -59,13 +63,19 @@ const Search = ({navigation}) => {
             
             <ScrollView showsVerticalScrollIndicator={false} >
             {
-                searchResults &&
+                isLoading ?
+                    <>
+                    <CardListSkeleton />
+                    <CardListSkeleton />
+                    <CardListSkeleton />
+                    </>
+                    :
                 searchResults.map(result => 
                     <CardList key={result.id} result={result} navigation={navigation} />
                 )
             }
             {
-                !isSearch && <NowPlaying />
+                !isSearch && <NowPlaying navigation={navigation} />
             }
             </ScrollView>
             

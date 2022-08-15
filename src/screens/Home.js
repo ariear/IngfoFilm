@@ -7,6 +7,7 @@ import ResultCategory from "./components/ResultCategory"
 
 const Home = ({navigation}) => {
     const [listFilm, setListFilm] = useState([])
+    const [isResultsLoading, setisResultsLoading] = useState(false)
 
     return (
         <ScrollView style={style.container}>
@@ -21,8 +22,8 @@ const Home = ({navigation}) => {
             </TouchableWithoutFeedback>
             
             <HomeCardScroll navigation={navigation} />
-            <CategoryList setListFilm={setListFilm} />
-            <ResultCategory listFilm={listFilm} navigation={navigation} />
+            <CategoryList setListFilm={setListFilm} setisResultsLoading={setisResultsLoading} />
+            <ResultCategory listFilm={listFilm} navigation={navigation} isResultsLoading={isResultsLoading} />
         </ScrollView>
     )
 }

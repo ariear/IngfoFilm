@@ -1,15 +1,19 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native"
 import config from "../../../config"
+import ResultCategorySkeleton from "./ResultCategorySkeleton"
 
-const NowPlaying = () => {
+const NowPlaying = ({navigation}) => {
     const [nowplayingFilm, setnowplayingFilm ] = useState([])
+    const [isLoading , setIsLoading] = useState(false)
 
     const getNowPlayingFilm = async () => {
+        setIsLoading(true)
         const fetchData = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${config.API_KEY}&language=en-US&page=1`)
         if (fetchData.status === 200) {
             setnowplayingFilm(fetchData.data.results)
+            setIsLoading(false)
         }
     }
 
@@ -23,9 +27,23 @@ const NowPlaying = () => {
 
             <View style={style.parentCard}>
                 {
-                    nowplayingFilm &&
+                    isLoading ? 
+                    <>
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    <ResultCategorySkeleton /> 
+                    </>
+                    :
                     nowplayingFilm.map(film => 
-                        <Image source={{ uri: `https://image.tmdb.org/t/p/original/${film.poster_path}` }} key={film.id} style={style.cardChild} />
+                        <TouchableWithoutFeedback key={film.id} onPress={() => navigation.navigate('DetailFilm', {mid: film.id})} >
+                            <Image source={{ uri: `https://image.tmdb.org/t/p/original/${film.poster_path}` }} style={style.cardChild} />
+                        </TouchableWithoutFeedback>
                     )
                 }
             </View>

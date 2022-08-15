@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { ScrollView , StyleSheet, Text } from "react-native"
 import config from "../../../config"
 
-const CategoryList = ({setListFilm}) => {
+const CategoryList = ({setListFilm,setisResultsLoading}) => {
     const [listCategory] = useState([
         {
             id: 3,
@@ -29,10 +29,12 @@ const CategoryList = ({setListFilm}) => {
     const [by, setBy] = useState('popular')
 
     const getListFilm = async (by = 'popular') => {
+        setisResultsLoading(true)
         setListFilm([])
         const fetchData = await axios.get(`https://api.themoviedb.org/3/movie/${by}?api_key=${config.API_KEY}&language=en-US&page=1`)
         if (fetchData.status === 200) {
             setListFilm(fetchData.data.results)
+            setisResultsLoading(false)
         }
     }
 
